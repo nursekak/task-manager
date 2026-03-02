@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Экран входа -->
+    <section id="auth-screen" class="screen">
+      <div class="auth-card">
+        <h1>Task Manager</h1>
+        <div class="tabs">
+          <button type="button" class="tab active" data-tab="login">Вход</button>
+          <button type="button" class="tab" data-tab="register">Регистрация</button>
+        </div>
+        <form id="login-form" class="auth-form">
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Пароль" required>
+          <button type="submit">Войти</button>
+        </form>
+        <form id="register-form" class="auth-form hidden">
+          <input type="email" name="email" placeholder="Email (например: user@example.com)" required>
+          <input type="password" name="password" placeholder="Пароль — не менее 8 символов" required minlength="8" title="Минимум 8 символов">
+          <button type="submit">Зарегистрироваться</button>
+        </form>
+        <p id="auth-error" class="error hidden"></p>
+      </div>
+    </section>
+
+    <!-- Экран задач -->
+    <section id="tasks-screen" class="screen hidden">
+      <header class="header">
+        <h1>Мои задачи</h1>
+        <div class="header-actions">
+          <span id="user-email" class="user-email"></span>
+          <button type="button" id="logout-btn" class="btn secondary">Выйти</button>
+        </div>
+      </header>
+      <div class="toolbar">
+        <form id="add-task-form" class="add-form">
+          <input type="text" name="title" placeholder="Название задачи" required maxlength="255">
+          <input type="text" name="description" placeholder="Описание (необязательно)">
+          <select name="status">
+            <option value="pending">Ожидает</option>
+            <option value="in_progress">В работе</option>
+            <option value="done">Готово</option>
+          </select>
+          <button type="submit" class="btn primary">Добавить</button>
+        </form>
+        <div class="filters">
+          <label>Фильтр по статусу:</label>
+          <select id="filter-status">
+            <option value="">Все</option>
+            <option value="pending">Ожидает</option>
+            <option value="in_progress">В работе</option>
+            <option value="done">Готово</option>
+          </select>
+          <button type="button" id="apply-filter" class="btn secondary">Применить</button>
+        </div>
+      </div>
+      <p id="tasks-error" class="error hidden"></p>
+      <ul id="task-list" class="task-list"></ul>
+      <div id="pagination" class="pagination"></div>
+    </section>
+  </div>
+
+  <!-- Модальное окно редактирования -->
+  <div id="edit-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Редактировать задачу</h2>
+      <form id="edit-task-form">
+        <input type="hidden" name="id">
+        <input type="text" name="title" placeholder="Название" required maxlength="255">
+        <textarea name="description" placeholder="Описание" rows="3"></textarea>
+        <select name="status">
+          <option value="pending">Ожидает</option>
+          <option value="in_progress">В работе</option>
+          <option value="done">Готово</option>
+        </select>
+        <div class="modal-actions">
+          <button type="button" id="cancel-edit" class="btn secondary">Отмена</button>
+          <button type="submit" class="btn primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
